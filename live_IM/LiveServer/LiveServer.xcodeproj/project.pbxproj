@@ -416,6 +416,7 @@
 				0E13BE431F8787F60044694C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

@@ -21,10 +21,11 @@ class ViewController: UIViewController {
         if socket.connectServer() {
             print("已连接上服务器")
             socket.startReadMsg()
+            
+            // 心跳包
+            timer = Timer(fireAt: Date(), interval: 9, target: self, selector: #selector(sendHeartBeat), userInfo: nil, repeats: true)
+            RunLoop.main.add(timer, forMode: .commonModes)
         }
-        
-        timer = Timer(fireAt: Date(), interval: 9, target: self, selector: #selector(sendHeartBeat), userInfo: nil, repeats: true)
-        RunLoop.main.add(timer, forMode: .commonModes)
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -57,7 +58,7 @@ class ViewController: UIViewController {
 
 extension ViewController {
     @objc fileprivate func sendHeartBeat() {
-        print("timer")
+        socket.sendHeartBeat()
     }
 }
 

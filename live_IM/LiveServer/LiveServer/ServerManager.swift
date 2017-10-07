@@ -22,13 +22,12 @@ extension ServerManager {
         
         // 开始接收客户端
         DispatchQueue.global().async {
-            // 需要心跳包保活
-            
             // 1.当前线程在这里会死循环（导致只能处理一个客户端，不能处理多个）
             while self.isServerRunning {
                 if let client = self.serverSocket.accept() {
                     // 2.所以再开启一条线程处理
                     DispatchQueue.global().async {
+                        print("收到一个客户端")
                         self.handlerClient(client)
                     }
                 }

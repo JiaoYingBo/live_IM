@@ -37,9 +37,10 @@ extension ClientManager {
     func startReadMsg() {
         isClientConnected = true
         
-        let timer = Timer(timeInterval: 10.0, target: self, selector: #selector(checkHeartBeat), userInfo: nil, repeats: true)
-        // timer加入当前线程，当前为分线程
-        RunLoop.current.add(timer, forMode: .commonModes)
+//        let timer = Timer(timeInterval: 1.0, target: self, selector: #selector(checkHeartBeat), userInfo: nil, repeats: true)
+//        // timer加入当前线程，当前为分线程
+//        RunLoop.current.add(timer, forMode: .commonModes)
+//        RunLoop.current.run()
         
         while isClientConnected {
             // 返回值为[UInt8]，即char类型的数组
@@ -59,15 +60,23 @@ extension ClientManager {
                 guard let msg = tcpClient.read(length) else { return }
                 let msgData = Data(bytes: msg, count: length)
                 
-                /*
+                
                 switch type {
                 case 0,1:
                     let user = try! UserInfo.parseFrom(data: msgData)
-                    print("==>\(user.name) \(user.level) \(user.iconUrl)")
+                    print("s==>\(user.name) \(user.level) \(user.iconUrl)")
+                case 2:
+                    let chatMsg = try! ChatMessage.parseFrom(data: msgData)
+                    print("s==>\(chatMsg.text)")
+                case 3:
+                    let chatMsg = try! GiftMessage.parseFrom(data: msgData)
+                    print("==>\(chatMsg.giftname)")
+                case 100:
+                    print("心跳包")
                 default:
-                    print("未知的类型")
+                    print("未知类型的消息")
                 }
-                */
+ 
                 
                 // 如果client离开了，先把它从数组中移除，再分发消息
                 if type == 1 {

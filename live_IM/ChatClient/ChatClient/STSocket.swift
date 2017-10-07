@@ -34,6 +34,7 @@ extension STSocket {
         DispatchQueue.global().async {
             // 此while循环在Xcode8.3.3上会一直打印-1，贼鸡儿恶心!
             while true {
+                sleep(1)
                 // 以下代码跟Server中的解析代码相同
                 if let lMsg = self.tcpClient.read(4) {
                     // 1.读取长度的Data，跟客户端约定好前4位表示长度
@@ -68,6 +69,9 @@ extension STSocket {
         case 2:
             let chatMsg = try! ChatMessage.parseFrom(data: msgData)
             print("==>\(chatMsg.text)")
+        case 3:
+            let chatMsg = try! GiftMessage.parseFrom(data: msgData)
+            print("==>\(chatMsg.giftname)")
         default:
             print("未知类型的消息")
         }
@@ -107,6 +111,7 @@ extension STSocket {
     func sendGiftMsg(giftName: String, giftURL: String, giftCount: Int) {
         // 1.创建GiftMessage类型
         let giftMsg = GiftMessage.Builder()
+        giftMsg.user = try! userInfo.build()
         giftMsg.giftname = giftName
         giftMsg.giftUrl = giftURL
         giftMsg.giftcount = Int32(giftCount)
@@ -116,6 +121,13 @@ extension STSocket {
         
         // 3.发送消息
         sendMsg(data: msgData, type:3)
+    }
+    
+    
+    func sendHeartBeat() {
+        let heartString = "heart beat"
+        let heartData = heartString.data(using: .utf8)!
+        sendMsg(data: heartData, type: 100)
     }
     
     fileprivate func sendMsg(data: Data, type: Int) {

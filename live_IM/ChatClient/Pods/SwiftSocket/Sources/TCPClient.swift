@@ -93,7 +93,6 @@ open class TCPClient: Socket {
     * send string
     * return success or fail with message
     */
-    @discardableResult
     open func send(string: String) -> Result {
         guard let fd = self.fd else { return .failure(SocketError.connectionClosed) }
       

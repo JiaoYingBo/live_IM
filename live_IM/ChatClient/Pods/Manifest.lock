@@ -1,15 +1,15 @@
 PODS:
-  - ProtocolBuffers-Swift (3.0.22)
+  - ProtocolBuffers-Swift (3.0.24)
   - SwiftSocket (2.0.2)
 
 DEPENDENCIES:
   - ProtocolBuffers-Swift
-  - SwiftSocket (~> 2.0.2)
+  - SwiftSocket (~> 2.0)
 
 SPEC CHECKSUMS:
-  ProtocolBuffers-Swift: ac5867ab2acc97ca67f5ec6a62b654bd31563028
+  ProtocolBuffers-Swift: 42ad3864cb1d09dd544589742d585d553dcdff2c
   SwiftSocket: 6f4c9c63fbc5c1d61188936bb3c599fd546f40ae
 
-PODFILE CHECKSUM: 3b955ef58a8dcd189822ab65e46f78dada4342f4
+PODFILE CHECKSUM: 91c587c3ecef358837b96e3e9f51e51ad2b5f2f4
 
 COCOAPODS: 1.2.0

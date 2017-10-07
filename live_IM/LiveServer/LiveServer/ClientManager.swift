@@ -6,6 +6,13 @@
 //  Copyright © 2017年 jyb. All rights reserved.
 //
 
+/*
+ 进入房间 = 0
+ 离开房间 = 1
+ 文本 = 2
+ 礼物 = 3
+ */
+
 import Cocoa
 
 protocol ClientManagerDelegate: class {
@@ -48,7 +55,6 @@ extension ClientManager {
                 /*
                 switch type {
                 case 0,1:
-                    print("")
                     let user = try! UserInfo.parseFrom(data: msgData)
                     print("==>\(user.name) \(user.level) \(user.iconUrl)")
                 default:
@@ -56,12 +62,16 @@ extension ClientManager {
                 }
                 */
                 
+                // 如果client离开了，先把它从数组中移除，再分发消息
+                
                 let totalData = headData + typeData + msgData
                 delegate?.sendMsgToClient(totalData)
                 
             } else {
                 isClientConnected = false
                 print("客户端断开了连接")
+                tcpClient.close()
+                // 除了close掉，还需要从ServerManager中的clientMrgs数组中移除
             }
         }
     }

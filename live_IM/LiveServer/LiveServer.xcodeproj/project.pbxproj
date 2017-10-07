@@ -17,43 +17,25 @@
 		0E13BE5F1F878EEB0044694C /* yudpsocket.c in Sources */ = {isa = PBXBuildFile; fileRef = 0E13BE5A1F878EEB0044694C /* yudpsocket.c */; };
 		0E13BE601F878EEB0044694C /* yudpsocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E13BE5B1F878EEB0044694C /* yudpsocket.swift */; };
 		0E13BE621F878F1E0044694C /* ServerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E13BE611F878F1E0044694C /* ServerManager.swift */; };
+		0E13BE8A1F87B9BC0044694C /* ClientManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E13BE891F87B9BC0044694C /* ClientManager.swift */; };
+		0E1A184F1F889C7A003D6395 /* Immessage.proto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E1A184E1F889C7A003D6395 /* Immessage.proto.swift */; };
+		0E1A19671F88A526003D6395 /* ProtocolBuffers.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E1A19641F88A4EC003D6395 /* ProtocolBuffers.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		0E13BE4C1F8789DE0044694C /* PBXContainerItemProxy */ = {
+		0E1A19631F88A4EC003D6395 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 0E13BE441F8789DE0044694C /* ProtocolBuffers.xcodeproj */;
+			containerPortal = 0E1A195D1F88A4EC003D6395 /* ProtocolBuffers.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 3F85569919C71BCF003802F2;
+			remoteGlobalIDString = "ProtocolBuffers::ProtocolBuffers::Product";
 			remoteInfo = ProtocolBuffers;
 		};
-		0E13BE4E1F8789DE0044694C /* PBXContainerItemProxy */ = {
+		0E1A19651F88A4EC003D6395 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 0E13BE441F8789DE0044694C /* ProtocolBuffers.xcodeproj */;
+			containerPortal = 0E1A195D1F88A4EC003D6395 /* ProtocolBuffers.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 3F8556A419C71BCF003802F2;
-			remoteInfo = UnitTesting;
-		};
-		0E13BE501F8789DE0044694C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 0E13BE441F8789DE0044694C /* ProtocolBuffers.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 3F41061C1A1A667700742090;
-			remoteInfo = "ProtocolBuffers(OSX)";
-		};
-		0E13BE521F8789DE0044694C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 0E13BE441F8789DE0044694C /* ProtocolBuffers.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 3F4106261A1A667800742090;
-			remoteInfo = "UnitTesting(OSX)";
-		};
-		0E13BE541F8789DE0044694C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 0E13BE441F8789DE0044694C /* ProtocolBuffers.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 3F31A1A91BA199C000F477C1;
-			remoteInfo = "ProtocolBuffers(watchOS)";
+			remoteGlobalIDString = 3F9996DC1F879A470016C76C;
+			remoteInfo = Tests;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -64,13 +46,15 @@
 		0E13BE391F8787F60044694C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0E13BE3C1F8787F60044694C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		0E13BE3E1F8787F60044694C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		0E13BE441F8789DE0044694C /* ProtocolBuffers.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ProtocolBuffers.xcodeproj; path = ../../ProtocolBuffers/ProtocolBuffers.xcodeproj; sourceTree = "<group>"; };
 		0E13BE571F878EEB0044694C /* ysocket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ysocket.swift; sourceTree = "<group>"; };
 		0E13BE581F878EEB0044694C /* ytcpsocket.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ytcpsocket.c; sourceTree = "<group>"; };
 		0E13BE591F878EEB0044694C /* ytcpsocket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ytcpsocket.swift; sourceTree = "<group>"; };
 		0E13BE5A1F878EEB0044694C /* yudpsocket.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = yudpsocket.c; sourceTree = "<group>"; };
 		0E13BE5B1F878EEB0044694C /* yudpsocket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = yudpsocket.swift; sourceTree = "<group>"; };
 		0E13BE611F878F1E0044694C /* ServerManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServerManager.swift; sourceTree = "<group>"; };
+		0E13BE891F87B9BC0044694C /* ClientManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClientManager.swift; sourceTree = "<group>"; };
+		0E1A184E1F889C7A003D6395 /* Immessage.proto.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Immessage.proto.swift; sourceTree = "<group>"; };
+		0E1A195D1F88A4EC003D6395 /* ProtocolBuffers.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ProtocolBuffers.xcodeproj; path = "../../protobuf-swift-master/ProtocolBuffers.xcodeproj"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -78,6 +62,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0E1A19671F88A526003D6395 /* ProtocolBuffers.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -107,24 +92,14 @@
 				0E13BE351F8787F60044694C /* AppDelegate.swift */,
 				0E13BE371F8787F60044694C /* ViewController.swift */,
 				0E13BE611F878F1E0044694C /* ServerManager.swift */,
-				0E13BE441F8789DE0044694C /* ProtocolBuffers.xcodeproj */,
+				0E13BE891F87B9BC0044694C /* ClientManager.swift */,
+				0E1A184E1F889C7A003D6395 /* Immessage.proto.swift */,
+				0E1A195D1F88A4EC003D6395 /* ProtocolBuffers.xcodeproj */,
 				0E13BE391F8787F60044694C /* Assets.xcassets */,
 				0E13BE3B1F8787F60044694C /* Main.storyboard */,
 				0E13BE3E1F8787F60044694C /* Info.plist */,
 			);
 			path = LiveServer;
-			sourceTree = "<group>";
-		};
-		0E13BE451F8789DE0044694C /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				0E13BE4D1F8789DE0044694C /* ProtocolBuffers.framework */,
-				0E13BE4F1F8789DE0044694C /* ProtocolBuffersTests.xctest */,
-				0E13BE511F8789DE0044694C /* ProtocolBuffers.framework */,
-				0E13BE531F8789DE0044694C /* UnitTesting(OSX).xctest */,
-				0E13BE551F8789DE0044694C /* ProtocolBuffers.framework */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 		0E13BE561F878EEB0044694C /* SwiftSocket */ = {
@@ -137,6 +112,15 @@
 				0E13BE5B1F878EEB0044694C /* yudpsocket.swift */,
 			);
 			path = SwiftSocket;
+			sourceTree = "<group>";
+		};
+		0E1A195E1F88A4EC003D6395 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				0E1A19641F88A4EC003D6395 /* ProtocolBuffers.framework */,
+				0E1A19661F88A4EC003D6395 /* Tests.xctest */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -188,8 +172,8 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = 0E13BE451F8789DE0044694C /* Products */;
-					ProjectRef = 0E13BE441F8789DE0044694C /* ProtocolBuffers.xcodeproj */;
+					ProductGroup = 0E1A195E1F88A4EC003D6395 /* Products */;
+					ProjectRef = 0E1A195D1F88A4EC003D6395 /* ProtocolBuffers.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -200,39 +184,18 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		0E13BE4D1F8789DE0044694C /* ProtocolBuffers.framework */ = {
+		0E1A19641F88A4EC003D6395 /* ProtocolBuffers.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
 			path = ProtocolBuffers.framework;
-			remoteRef = 0E13BE4C1F8789DE0044694C /* PBXContainerItemProxy */;
+			remoteRef = 0E1A19631F88A4EC003D6395 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		0E13BE4F1F8789DE0044694C /* ProtocolBuffersTests.xctest */ = {
+		0E1A19661F88A4EC003D6395 /* Tests.xctest */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
-			path = ProtocolBuffersTests.xctest;
-			remoteRef = 0E13BE4E1F8789DE0044694C /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		0E13BE511F8789DE0044694C /* ProtocolBuffers.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = ProtocolBuffers.framework;
-			remoteRef = 0E13BE501F8789DE0044694C /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		0E13BE531F8789DE0044694C /* UnitTesting(OSX).xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = "UnitTesting(OSX).xctest";
-			remoteRef = 0E13BE521F8789DE0044694C /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		0E13BE551F8789DE0044694C /* ProtocolBuffers.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = ProtocolBuffers.framework;
-			remoteRef = 0E13BE541F8789DE0044694C /* PBXContainerItemProxy */;
+			path = Tests.xctest;
+			remoteRef = 0E1A19651F88A4EC003D6395 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -255,6 +218,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0E13BE621F878F1E0044694C /* ServerManager.swift in Sources */,
+				0E1A184F1F889C7A003D6395 /* Immessage.proto.swift in Sources */,
 				0E13BE5C1F878EEB0044694C /* ysocket.swift in Sources */,
 				0E13BE381F8787F60044694C /* ViewController.swift in Sources */,
 				0E13BE5F1F878EEB0044694C /* yudpsocket.c in Sources */,
@@ -262,6 +226,7 @@
 				0E13BE361F8787F60044694C /* AppDelegate.swift in Sources */,
 				0E13BE5E1F878EEB0044694C /* ytcpsocket.swift in Sources */,
 				0E13BE601F878EEB0044694C /* yudpsocket.swift in Sources */,
+				0E13BE8A1F87B9BC0044694C /* ClientManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

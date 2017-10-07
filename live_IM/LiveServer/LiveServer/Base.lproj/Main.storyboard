@@ -709,7 +709,7 @@
                                 </connections>
                             </button>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7uG-Ak-4W0">
-                                <rect key="frame" x="54" y="115" width="372" height="17"/>
+                                <rect key="frame" x="54" y="107" width="372" height="25"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="服务器已关闭" id="Zke-w0-tpm">
                                     <font key="font" size="13" name=".PingFangSC-Regular"/>

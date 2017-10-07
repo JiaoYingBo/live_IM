@@ -26,6 +26,7 @@ class ClientManager: NSObject {
     weak var delegate: ClientManagerDelegate?
     
     fileprivate var isClientConnected: Bool = false
+    fileprivate var revHeartBeat: Bool = false
     
     init(tcpClient: TCPClient) {
         self.tcpClient = tcpClient
@@ -35,6 +36,11 @@ class ClientManager: NSObject {
 extension ClientManager {
     func startReadMsg() {
         isClientConnected = true
+        
+        let timer = Timer(timeInterval: 10.0, target: self, selector: #selector(checkHeartBeat), userInfo: nil, repeats: true)
+        // timer加入当前线程，当前为分线程
+        RunLoop.current.add(timer, forMode: .commonModes)
+        
         while isClientConnected {
             // 返回值为[UInt8]，即char类型的数组
             if let msg = tcpClient.read(4) {
@@ -67,6 +73,10 @@ extension ClientManager {
                 if type == 1 {
                     tcpClient.close()
                     delegate?.removeClient(self)
+                } else if type == 100 {
+                    revHeartBeat = true
+                    // 如果是心跳包，就直接进行下一次循环
+                    continue
                 }
                 
                 let totalData = headData + typeData + msgData
@@ -79,6 +89,17 @@ extension ClientManager {
                 tcpClient.close()
                 print("客户端断开了连接")
             }
+        }
+    }
+}
+
+extension ClientManager {
+    @objc fileprivate func checkHeartBeat() {
+        if !revHeartBeat {
+            tcpClient.close()
+            delegate?.removeClient(self)
+        } else {
+            revHeartBeat = false
         }
     }
 }

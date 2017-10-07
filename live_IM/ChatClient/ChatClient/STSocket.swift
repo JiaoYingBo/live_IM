@@ -94,6 +94,7 @@ extension STSocket {
     func sendTextMsg(msg: String) {
         // 1.创建ChatMessage类型
         let chatMsg = ChatMessage.Builder()
+        chatMsg.user = try! userInfo.build()
         chatMsg.text = msg
         
         // 2.获取消息data

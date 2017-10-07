@@ -13,6 +13,8 @@ class ViewController: UIViewController {
 
     fileprivate lazy var socket: STSocket = STSocket(addr: "0.0.0.0", port: 7878)
     
+    fileprivate var timer: Timer!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -20,6 +22,15 @@ class ViewController: UIViewController {
             print("已连接上服务器")
             socket.startReadMsg()
         }
+        
+        timer = Timer(fireAt: Date(), interval: 9, target: self, selector: #selector(sendHeartBeat), userInfo: nil, repeats: true)
+        RunLoop.main.add(timer, forMode: .commonModes)
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        // RunLoop会强引用定时器，定时器强引用self造成self无法释放，所以不能在dealloc方法中释放timer
+        timer.invalidate()
     }
 
     /*
@@ -41,6 +52,12 @@ class ViewController: UIViewController {
         default:
             return
         }
+    }
+}
+
+extension ViewController {
+    @objc fileprivate func sendHeartBeat() {
+        print("timer")
     }
 }
 

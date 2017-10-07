@@ -6,6 +6,14 @@
 //  Copyright © 2017年 jyb. All rights reserved.
 //
 
+/**
+ 1> 获取到服务器对应的IP/端口号
+ 2> 使用Socket，通过IP/端口号和服务器建立连接
+ 3> 开启定时器，实时让服务器发送心跳包
+ 4> 通过sendMsg，给服务器发送消息：字节流 --> 消息长度 + 消息类型 + 真正的消息
+ 5> 读取从服务器传过来的消息(开启子线程)
+ */
+
 import UIKit
 import ProtocolBuffers
 

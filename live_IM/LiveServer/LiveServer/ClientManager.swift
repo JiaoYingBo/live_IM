@@ -65,6 +65,9 @@ extension ClientManager {
         }
         */
         
+        // 这是模拟的服务器，需要不停while循环来处理socket，导致心跳包不好搞，就先放着吧
+        // 有空研究下AFN的异步线程处理方式
+        
 //        self.heartTimer = Timer(fireAt: Date(), interval: 1, target: self, selector: #selector(checkHeartBeat), userInfo: nil, repeats: true)
 //        RunLoop.current.add(self.heartTimer!, forMode: .defaultRunLoopMode)
 //        RunLoop.current.run()

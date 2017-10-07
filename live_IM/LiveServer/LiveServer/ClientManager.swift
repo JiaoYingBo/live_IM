@@ -17,6 +17,7 @@ import Cocoa
 
 protocol ClientManagerDelegate: class {
     func sendMsgToClient(_ data: Data)
+    func removeClient(_ client: ClientManager)
 }
 
 class ClientManager: NSObject {
@@ -63,15 +64,20 @@ extension ClientManager {
                 */
                 
                 // 如果client离开了，先把它从数组中移除，再分发消息
+                if type == 1 {
+                    tcpClient.close()
+                    delegate?.removeClient(self)
+                }
                 
                 let totalData = headData + typeData + msgData
                 delegate?.sendMsgToClient(totalData)
                 
             } else {
-                isClientConnected = false
-                print("客户端断开了连接")
-                tcpClient.close()
                 // 除了close掉，还需要从ServerManager中的clientMrgs数组中移除
+                delegate?.removeClient(self)
+                isClientConnected = false
+                tcpClient.close()
+                print("客户端断开了连接")
             }
         }
     }

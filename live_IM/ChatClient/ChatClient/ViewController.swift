@@ -24,7 +24,7 @@ class ViewController: UIViewController {
             
             // 心跳包
             timer = Timer(fireAt: Date(), interval: 9, target: self, selector: #selector(sendHeartBeat), userInfo: nil, repeats: true)
-            RunLoop.main.add(timer, forMode: .commonModes)
+            timer.fire()
         }
     }
     

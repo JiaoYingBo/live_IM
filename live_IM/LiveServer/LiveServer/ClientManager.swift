@@ -26,17 +26,17 @@ class ClientManager: NSObject {
     weak var delegate: ClientManagerDelegate?
     
     fileprivate var isClientConnected: Bool = false
-    fileprivate var revHeartBeat: Bool = false
+    fileprivate var heartTimeCount: Int = 0
     
-    weak var timer: Timer?
+    fileprivate var heartTimer: Timer?
+    fileprivate var readTimer: Timer?
     
     init(tcpClient: TCPClient) {
         self.tcpClient = tcpClient
     }
     
     deinit {
-        // block的timer不会强引用self，所以可以在这里释放
-        timer?.invalidate()
+        // block的timer不会强引用self，可以在这里释放
     }
 }
 
@@ -64,79 +64,90 @@ extension ClientManager {
             RunLoop.current.run()
         }
         */
-        // 在主线程创建timer也不执行。。。。真尼玛奇怪
-//        DispatchQueue.main.async {
-//            self.timer = Timer(timeInterval: 10.0, target: self, selector: #selector(self.checkHeartBeat), userInfo: nil, repeats: true)
-//        }
         
-        while isClientConnected {
-            // 返回值为[UInt8]，即char类型的数组
-            if let msg = tcpClient.read(4) {
-                // 1.读取长度的Data，跟客户端约定好前4位表示长度
-                let headData = Data(bytes: msg, count: 4)
-                var length = 0
-                (headData as NSData).getBytes(&length, length: 4)
-                
-                // 2.读取类型
-                guard let typeMsg = tcpClient.read(2) else { return }
-                let typeData = Data(bytes: typeMsg, count: 2)
-                var type: Int = 0
-                (typeData as NSData).getBytes(&type, length: 2)
-                
-                // 3.根据长度读取真实消息
-                guard let msg = tcpClient.read(length) else { return }
-                let msgData = Data(bytes: msg, count: length)
-                
-                
-                switch type {
-                case 0,1:
-                    let user = try! UserInfo.parseFrom(data: msgData)
-                    print("s==>\(user.name) \(user.level) \(user.iconUrl)")
-                case 2:
-                    let chatMsg = try! ChatMessage.parseFrom(data: msgData)
-                    print("s==>\(chatMsg.text)")
-                case 3:
-                    let chatMsg = try! GiftMessage.parseFrom(data: msgData)
-                    print("==>\(chatMsg.giftname)")
-                case 100:
-                    print("心跳包")
-                default:
-                    print("未知类型的消息")
-                }
- 
-                
-                // 如果client离开了，先把它从数组中移除，再分发消息
-                if type == 1 {
-                    tcpClient.close()
-                    delegate?.removeClient(self)
-                } else if type == 100 {
-                    revHeartBeat = true
-                    // 如果是心跳包，就直接进行下一次循环
-                    continue
-                }
-                
-                let totalData = headData + typeData + msgData
-                delegate?.sendMsgToClient(totalData)
-                
-            } else {
-                // 除了close掉，还需要从ServerManager中的clientMrgs数组中移除
-                delegate?.removeClient(self)
-                isClientConnected = false
-                tcpClient.close()
-                print("客户端断开了连接")
-            }
+//        self.heartTimer = Timer(fireAt: Date(), interval: 1, target: self, selector: #selector(checkHeartBeat), userInfo: nil, repeats: true)
+//        RunLoop.current.add(self.heartTimer!, forMode: .defaultRunLoopMode)
+//        RunLoop.current.run()
+        
+        DispatchQueue.global().async {
+            self.readTimer = Timer(fireAt: Date(), interval: 0.5, target: self, selector: #selector(self.readMsg), userInfo: nil, repeats: true)
+            RunLoop.current.add(self.readTimer!, forMode: .defaultRunLoopMode)
+            RunLoop.current.run()
         }
     }
 }
 
 extension ClientManager {
     @objc fileprivate func checkHeartBeat() {
-        print("revHeartBeat")
-        if !revHeartBeat {
-            tcpClient.close()
-            delegate?.removeClient(self)
-        } else {
-            revHeartBeat = false
+        print("revHeartBeat:\(heartTimeCount)")
+        heartTimeCount += 1
+        if heartTimeCount >= 10 {
+            removeClient()
         }
+    }
+    
+    @objc fileprivate func readMsg() {
+        print("read")
+        // 返回值为[UInt8]，即char类型的数组
+        if let msg = tcpClient.read(4) {
+            print("in")
+            // 1.读取长度的Data，跟客户端约定好前4位表示长度
+            let headData = Data(bytes: msg, count: 4)
+            var length = 0
+            (headData as NSData).getBytes(&length, length: 4)
+            
+            // 2.读取类型
+            guard let typeMsg = tcpClient.read(2) else { return }
+            let typeData = Data(bytes: typeMsg, count: 2)
+            var type: Int = 0
+            (typeData as NSData).getBytes(&type, length: 2)
+            
+            // 3.根据长度读取真实消息
+            guard let msg = tcpClient.read(length) else { return }
+            let msgData = Data(bytes: msg, count: length)
+            
+            
+            switch type {
+            case 0,1:
+                let user = try! UserInfo.parseFrom(data: msgData)
+                print("s==>\(user.name) \(user.level) \(user.iconUrl)")
+            case 2:
+                let chatMsg = try! ChatMessage.parseFrom(data: msgData)
+                print("s==>\(chatMsg.text)")
+            case 3:
+                let chatMsg = try! GiftMessage.parseFrom(data: msgData)
+                print("==>\(chatMsg.giftname)")
+            case 100:
+                print("心跳包")
+            default:
+                print("未知类型的消息")
+            }
+            
+            
+            // 如果client离开了，先把它从数组中移除，再分发消息
+            if type == 1 {
+                tcpClient.close()
+                delegate?.removeClient(self)
+            } else if type == 100 {
+                heartTimeCount = 0
+                // 如果是心跳包，就忽略
+                return
+            }
+            
+            let totalData = headData + typeData + msgData
+            delegate?.sendMsgToClient(totalData)
+        }
+    }
+    
+    fileprivate func removeClient() {
+        // 除了close掉，还需要从ServerManager中的clientMrgs数组中移除
+        delegate?.removeClient(self)
+        isClientConnected = false
+        heartTimer?.invalidate()
+        heartTimer = nil
+        readTimer?.invalidate()
+        readTimer = nil
+        tcpClient.close()
+        print("客户端断开了连接")
     }
 }

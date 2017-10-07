@@ -28,8 +28,15 @@ class ClientManager: NSObject {
     fileprivate var isClientConnected: Bool = false
     fileprivate var revHeartBeat: Bool = false
     
+    weak var timer: Timer?
+    
     init(tcpClient: TCPClient) {
         self.tcpClient = tcpClient
+    }
+    
+    deinit {
+        // block的timer不会强引用self，所以可以在这里释放
+        timer?.invalidate()
     }
 }
 
@@ -37,10 +44,30 @@ extension ClientManager {
     func startReadMsg() {
         isClientConnected = true
         
-//        let timer = Timer(timeInterval: 1.0, target: self, selector: #selector(checkHeartBeat), userInfo: nil, repeats: true)
-//        // timer加入当前线程，当前为分线程
-//        RunLoop.current.add(timer, forMode: .commonModes)
-//        RunLoop.current.run()
+        // 调用RunLoop的run方法，就相当于在此处放置了一个while循环，后面的代码都不会继续执行了
+        // 所以timer放在主线程或者单独一个线程比较合适
+        // 不过这里是为每个client都创建了一个timer，很明显实际中是行不通的，因为服务器不可能开上亿条线程
+        // block的Timer不会强引用self，可以在deInit中释放
+        /*
+        DispatchQueue.global().async {
+            self.timer = Timer(timeInterval: 2.0, repeats: true, block: { (timer) in
+                print("revHeartBeat")
+                if !self.revHeartBeat {
+                    print("revHeartBeat close")
+                    self.tcpClient.close()
+                    self.delegate?.removeClient(self)
+                } else {
+                    self.revHeartBeat = false
+                }
+            })
+            RunLoop.current.add(self.timer!, forMode: .defaultRunLoopMode)
+            RunLoop.current.run()
+        }
+        */
+        // 在主线程创建timer也不执行。。。。真尼玛奇怪
+//        DispatchQueue.main.async {
+//            self.timer = Timer(timeInterval: 10.0, target: self, selector: #selector(self.checkHeartBeat), userInfo: nil, repeats: true)
+//        }
         
         while isClientConnected {
             // 返回值为[UInt8]，即char类型的数组
@@ -104,6 +131,7 @@ extension ClientManager {
 
 extension ClientManager {
     @objc fileprivate func checkHeartBeat() {
+        print("revHeartBeat")
         if !revHeartBeat {
             tcpClient.close()
             delegate?.removeClient(self)

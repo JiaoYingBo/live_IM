@@ -125,9 +125,9 @@ extension STSocket {
     
     
     func sendHeartBeat() {
-        let heartString = "heart beat"
-        let heartData = heartString.data(using: .utf8)!
-        sendMsg(data: heartData, type: 100)
+//        let heartString = "heart beat"
+//        let heartData = heartString.data(using: .utf8)!
+//        sendMsg(data: heartData, type: 100)
     }
     
     fileprivate func sendMsg(data: Data, type: Int) {

@@ -1,4 +1,4 @@
-# live_IM（直播项目的即时通信模块）
+## live_IM（直播项目的即时通信模块）
 TCP提供的是可靠的链接，双方直接进行通信，UDP是不可靠链接，双方不是直接通信。
 
 * 建立 TCP Socket 链接过程：
@@ -17,4 +17,4 @@ TCP提供的是可靠的链接，双方直接进行通信，UDP是不可靠链�
 
 PB具有跨平台，序列化反序列化，数据量小等优点，它支持C++/Python/Java/OC/Swift等多种语言，可以直接将对象序列化成Data。
 
-安装ProtocolBuffer运行
+安装ProtocolBuffer运行环境，并安装ProtocolBuffer-Swift环境。完成之后就可以使用ProtocolBuffer协议了。
